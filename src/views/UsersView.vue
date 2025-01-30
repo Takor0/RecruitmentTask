@@ -35,18 +35,22 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import TableComponent from '@/components/TableComponent.vue'
 import IconComponent from '@/components/IconComponent.vue'
 import UsersService from '@/services/users'
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import InputComponent from '@/components/InputComponent.vue'
+import { useSearchParams } from '@/composables/useSearchParams'
 
-
-const searchUser = ref('')
-const users = ref([])
+const route = useRoute()
 const router = useRouter()
+
+const searchUser = ref(route.query.search || '')
+const users = ref([])
+
+const { setSearchParam } = useSearchParams()
 
 const tableBind = reactive({
   columns: ['avatar', 'full_name'],
@@ -55,6 +59,12 @@ const tableBind = reactive({
     full_name: 'Full Name'
   }
 })
+
+
+watch(searchUser, (newValue) => {
+  setSearchParam('search', newValue)
+})
+
 
 const filteredUsers = computed(() => {
   if (searchUser.value.trim()) {

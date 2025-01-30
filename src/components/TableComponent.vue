@@ -3,14 +3,22 @@
     <table class="w-full">
       <thead>
       <tr>
-        <th class="capitalize py-4 text-left pl-3" v-for="column in tableColumns" :key="column">
+        <th
+          class="capitalize py-4 text-left pl-3"
+          v-for="column in tableColumns"
+          :key="column"
+        >
           {{ getHeading(column) }}
         </th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="(row, index) in tableData" :key="row.id">
-        <td class="pl-3" v-for="column in tableColumns" :key="column">
+        <td
+          class="pl-3"
+          v-for="column in tableColumns"
+          :key="column"
+        >
           <div class="flex flex-row h-12 my-2 items-center">
             <slot :name="`c__${column}`" v-bind="{row, index}">
               <div
