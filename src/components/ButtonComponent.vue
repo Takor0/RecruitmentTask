@@ -1,11 +1,9 @@
 <template>
   <button class="cursor-pointer" :class="buttonClasses">
     <template v-if="icon">
-      <!-- Render the IconComponent if type is 'icon' and icon prop is provided -->
-      <IconComponent :icon="icon" class="w-5 h-5" />
+      <IconComponent :icon="icon" class="w-4 h-4" />
     </template>
     <template v-else>
-      <!-- Render the default slot content for 'primary' type -->
       <slot />
     </template>
   </button>
@@ -13,21 +11,24 @@
 
 <script setup>
 import { defineProps, computed } from 'vue'
-import IconComponent from '@/components/IconComponent.vue' // Ensure this path is correct
+import IconComponent from '@/components/IconComponent.vue'
 
-// Define component props
 const props = defineProps({
-  type: {
+  color: {
     type: String,
     default: 'primary',
     validator: (value) => ['primary'].includes(value)
   },
   icon: {
     type: String
+  },
+  size: {
+    type: String,
+    default: 'md',
+    validator: (value) => ['sm', 'md', 'lg'].includes(value)
   }
 })
 
-// Compute the button classes based on the 'type' prop
 const buttonClasses = computed(() => {
   if (props.icon) {
     return `
@@ -37,22 +38,41 @@ const buttonClasses = computed(() => {
       duration-200
       ease-in-out
     `
-  } else if (props.type === 'primary') {
+  } else if (props.color === 'primary') {
     return `
-      bg-green-500
-      flex
-      flex-row
-      items-center
-      px-3
-      py-1
-      gap-2
-      text-white
-      rounded-2xl
-      hover:bg-green-600
-      transition
-      duration-200
-      ease-in-out
+      btn
+      btn-${props.color}
+      btn-${props.size}
     `
   }
 })
 </script>
+<style scoped lang="scss">
+@use "sass:color";
+@use "@/styles/variables" as *;
+
+.btn-md {
+  padding: 0.25rem 0.75rem;
+  height: 2.5rem;
+}
+
+.btn-primary {
+  background-color: $primary;
+}
+
+.btn-primary:hover {
+  background-color: color.adjust($primary, $lightness: -10%);
+}
+
+.btn {
+  text-wrap: nowrap;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  color: white;
+  gap: 1rem;
+  border-radius: 1.2rem;
+  transition: background-color 0.2s;
+}
+</style>

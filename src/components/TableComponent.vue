@@ -1,49 +1,45 @@
 <template>
-  <div class="table w-full">
-    <div class="table__content-wrapper">
-      <div class="table__wrapper">
-        <table class="w-full">
-          <thead>
-          <tr>
-            <th class="capitalize text-left" v-for="column in tableColumns" :key="column">
-              {{ getHeading(column) }}
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(row, index) in tableData" :key="row.id">
-            <td v-for="column in tableColumns" :key="column">
-              <div class="flex flex-row h-6 my-3">
-                <slot :name="`c__${column}`" v-bind="{row, index}">
-                  <div
-                    v-if="column === 'action' && shouldDisplayActions"
-                    class="flex flex-row content-center"
-                  >
-                    <ButtonComponent
-                      v-if="handleDelete"
-                      @click="deleteRow(row.id)"
-                      icon="trash" />
-                    <ButtonComponent
-                      v-if="handleEdit"
-                      @click="handleEdit(row.id)"
-                      icon="edit"
-                    />
-                  </div>
-                  <div v-else>
-                    {{ row[column] }}
-                  </div>
-                </slot>
+  <div class="table-wrapper w-full">
+    <table class="w-full">
+      <thead>
+      <tr>
+        <th class="capitalize py-4 text-left pl-3" v-for="column in tableColumns" :key="column">
+          {{ getHeading(column) }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(row, index) in tableData" :key="row.id">
+        <td class="pl-3" v-for="column in tableColumns" :key="column">
+          <div class="flex flex-row h-12 my-2 items-center">
+            <slot :name="`c__${column}`" v-bind="{row, index}">
+              <div
+                v-if="column === 'action' && shouldDisplayActions"
+                class="flex flex-row content-center gap-4"
+              >
+                <ButtonComponent
+                  v-if="handleEdit"
+                  @click="handleEdit(row.id)"
+                  icon="edit"
+                />
+                <ButtonComponent
+                  v-if="handleDelete"
+                  @click="deleteRow(row.id)"
+                  icon="trash" />
               </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <PaginationComponent
-        :total-pages="totalPages"
-        v-model="currentPage"
-      />
-    </div>
+              <div v-else>
+                {{ row[column] }}
+              </div>
+            </slot>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <PaginationComponent
+      :total-pages="totalPages"
+      v-model="currentPage"
+    />
   </div>
 </template>
 <script setup>
@@ -57,7 +53,7 @@ const props = defineProps({
   handleEdit: Function,
   perPage: {
     type: Number,
-    default: 10
+    default: 8
   },
   columns: {
     type: Array,
@@ -109,32 +105,21 @@ const deleteRow = async (id) => {
 }
 
 </script>
-<style lang="scss">
-.table {
-  $paginator-height: 25px;
-  $table-paginator-gap: 10px;
-  margin-bottom: $paginator-height + $table-paginator-gap;
+<style scoped lang="scss">
+@use "@/styles/variables" as *;
 
-  &__content-wrapper {
-    position: relative;
-
-    tbody tr:nth-child(odd) {
-      background-color: #f9f9f9;
-    }
-
-    &__wrapper {
-      width: 100%;
-    }
+table {
+  thead tr {
+    color: $gray-500;
   }
 
-
-  .pagination-wrapper {
-    height: $paginator-height;
-    background-color: white;
-    margin-top: $table-paginator-gap;
-    position: absolute;
+  tbody {
+    tr:nth-child(odd) {
+      background-color: $gray-100;
+    }
   }
 }
+
 </style>
 
 

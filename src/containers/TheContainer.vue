@@ -7,6 +7,8 @@
 </template>
 
 <style lang="scss">
+@use "@/styles/variables" as *;
+
 .app {
   width: 100%;
   padding: 20px;
@@ -14,7 +16,7 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  //background-color: #f9f9f9;
+  background-color: $gray-100;
 }
 
 .container {

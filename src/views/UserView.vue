@@ -1,31 +1,43 @@
 <template>
-  <div>
-    <h1>Add user</h1>
-
-    <div>
-      <label for="firstName">First Name</label>
-      <input id="firstName" v-model="firstName" type="text" />
-    </div>
-    <div>
-      <label for="lastName">Last Name</label>
-      <input id="lastName" v-model="lastName" type="text" />
-    </div>
-
-    <div>
-      <div v-if="avatar">
-        <img :src="avatar" alt="User Avatar" />
+  <div class="user-view">
+    <h1 class="mb-4 view-title">
+      Add user
+    </h1>
+    <div class="flex flex-row-reverse flex-wrap gap-7">
+      <div class="flex flex-column flex-1 bg-white flex-wrap justify-around default-container">
+        <div v-if="avatar">
+          <img :src="avatar" alt="User Avatar" class="rounded-full" />
+        </div>
+        <div v-else>
+          <img src="@/assets/avatar.png">
+        </div>
+        <InputFileComponent
+          class="mt-auto"
+          type="file"
+          @change="handleAvatarChange"
+        >
+          <icon-component class="h-3" icon="camera" />
+          Change photo
+        </InputFileComponent>
       </div>
-      <div v-else>
-        <img src="@/assets/avatar.png">
+      <div class="flex-2 bg-white default-container flex gap-5 flex-col">
+        <div class="flex gap-5 mt-3">
+          <InputComponent
+            class="w-full"
+            label="First Name"
+            v-model="firstName"
+          />
+          <InputComponent
+            class="w-full"
+            label="Last Name"
+            v-model="lastName"
+          />
+        </div>
+        <ButtonComponent class="mt-auto mr-auto" @click="handleSave">
+          Update Details
+        </ButtonComponent>
       </div>
-      <button type="button">
-        <input type="file" @change="handleAvatarChange" />
-        Change Photo
-      </button>
     </div>
-    <ButtonComponent @click="handleSave">
-      Update Details
-    </ButtonComponent>
   </div>
 </template>
 
@@ -34,13 +46,15 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import UsersService from '@/services/users'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import InputComponent from '@/components/InputComponent.vue'
+import InputFileComponent from '@/components/InputFileComponent.vue'
+import IconComponent from '@/components/IconComponent.vue'
 
 const route = useRoute()
 const router = useRouter()
 
 const isNewUser = route.params.id === 'new'
 const userId = isNewUser ? null : route.params.id
-
 const firstName = ref('')
 const lastName = ref('')
 const avatar = ref(null)
@@ -78,9 +92,16 @@ async function handleSave() {
     } else {
       await UsersService.createUser(userData)
     }
-    router.push({name:"users"}) // Navigate back to list view
+    router.push({ name: 'users' }) // Navigate back to list view
   } catch (error) {
     console.error('Error saving user:', error)
   }
 }
 </script>
+<style lang="scss" scoped>
+.user-view {
+  .default-container {
+    min-height: 20rem;
+  }
+}
+</style>

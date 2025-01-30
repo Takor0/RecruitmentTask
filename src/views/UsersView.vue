@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <h1>
+  <div class="users-view relative">
+    <h1 class="mb-4 view-title">
       User list
     </h1>
-    <div class="bg-white">
-      <div class="flex flex-row justify-between h-5">
-        <span class="flex flex-row gap-2">
-          <input
-            v-model="searchUser"
-            type="text"
-            id="input-field"
-            placeholder="Search for users"
-          />
-          <IconComponent style="width: 10px;" icon="search" />
-        </span>
+    <div class="bg-white default-container">
+      <div class="flex flex-row justify-between">
+        <InputComponent
+          is-filter
+          class="search-input"
+          v-model="searchUser"
+          type="text"
+          placeholder="Search for users..."
+          append-icon="search"
+        />
         <ButtonComponent @click="router.push({name: 'user', params: {id:'new'}})">
-          <IconComponent class="w-3" icon="plus" />
+          <IconComponent class="h-3" icon="plus" />
           Add User
         </ButtonComponent>
       </div>
-      <button>Add User</button>
       <TableComponent
         :handle-delete="deleteUser"
         :handle-edit="editUser"
@@ -27,7 +25,7 @@
         :data=filteredUsers
       >
         <template #c__avatar="{row}">
-          <img :src="row.avatar" alt="avatar" />
+          <img class="rounded-full w-12" :src="row.avatar" alt="avatar" />
         </template>
         <template #c__full_name="{row}">
           {{ getName(row.first_name, row.last_name) }}
@@ -43,6 +41,7 @@ import TableComponent from '@/components/TableComponent.vue'
 import IconComponent from '@/components/IconComponent.vue'
 import UsersService from '@/services/users'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import InputComponent from '@/components/InputComponent.vue'
 
 
 const searchUser = ref('')
@@ -94,9 +93,33 @@ const deleteUser = async (id) => {
   }
 }
 
-
-// Lifecycle Hook
 onMounted(() => {
   fetchUsers()
 })
 </script>
+<style lang="scss">
+@use "@/styles/variables" as *;
+
+.users-view {
+  .table-wrapper tr {
+    td:nth-child(2) {
+      width: 80%;
+    }
+
+    td:first-child {
+      min-width: 40px;
+    }
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 30rem;
+  }
+
+  .pagination-wrapper {
+    position: absolute;
+    left: 0;
+    margin-top: 35px;
+  }
+}
+</style>

@@ -1,12 +1,15 @@
 <template>
-  <div class="pagination-wrapper">
+  <div class="pagination-wrapper flex flex-row">
     <button
+      class="flex justify-center items-center"
       @click="changePage(modelValue - 1)"
       :disabled="currentPage === 1"
     >
-      Poprzednia
+      <IconComponent class="h-3" icon="double-arrow-left" />
     </button>
     <button
+      class="pagination-page"
+      :class="{'active': currentPage === index + 1}"
       v-for="(_, index) in Array(totalPages)"
       :key="index"
       @click="changePage(index + 1)"
@@ -14,16 +17,18 @@
       {{ index + 1 }}
     </button>
     <button
+      class="flex justify-center items-center"
       @click="changePage(modelValue + 1)"
       :disabled="modelValue === totalPages"
     >
-      Następna
+      <IconComponent class="h-3" icon="double-arrow-right" />
     </button>
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits, computed } from 'vue'
+import IconComponent from '@/components/IconComponent.vue'
 
 const props = defineProps({
   modelValue: {
@@ -46,3 +51,47 @@ const changePage = (page) => {
   }
 }
 </script>
+<style lang="scss">
+@use "sass:color";
+@use "@/styles/variables" as *;
+
+.pagination-wrapper {
+  button:first-child {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+  }
+
+  button:last-child {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+
+  button {
+    height: 2rem;
+    background-color: white;
+    border-collapse: collapse;
+    min-width: 30px;
+    color: $primary;
+    border: 1px solid $gray-200;
+    margin-left: -1px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    color: $gray-500;
+  }
+
+  button.active {
+    background-color: $primary;
+    border-color: $primary;
+    color: white;
+  }
+
+  button:hover {
+    background-color: color.adjust($primary, $lightness: 40%);
+    border-color: color.adjust($primary, $lightness: 40%);
+  }
+}
+</style>
