@@ -4,7 +4,7 @@
       User list
     </h1>
     <div class="bg-white default-container">
-      <div class="flex flex-row justify-between">
+      <div class="flex flex-row justify-between items-center gap-3">
         <InputComponent
           is-filter
           class="search-input"

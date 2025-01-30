@@ -1,10 +1,10 @@
 <template>
-  <div class="input-component">
+  <div class="input-component flex flex-col">
     <label v-if="label">
       {{ label }}
     </label>
     <div
-      class="relative mt-3 input-wrapper rounded px-3 flex items-center flex-row h-8"
+      class="relative input-wrapper rounded px-3 flex items-center flex-row h-8"
       :class="computedClasses"
     >
       <input
@@ -57,6 +57,7 @@ const computedClasses = computed(() => {
 @use "@/styles/variables" as *;
 
 .input-component {
+  gap: 1rem;
 
   input:active, input:focus {
     outline: none;

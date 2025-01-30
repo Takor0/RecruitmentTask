@@ -4,7 +4,8 @@
       Add user
     </h1>
     <div class="flex flex-row-reverse flex-wrap gap-7">
-      <div class="flex flex-column flex-1 bg-white flex-wrap justify-around default-container">
+      <div
+        class="flex flex-column flex-1 bg-white flex-wrap justify-around default-container right-content">
         <div v-if="avatar">
           <img :src="avatar" alt="User Avatar" class="rounded-full" />
         </div>
@@ -21,7 +22,7 @@
         </InputFileComponent>
       </div>
       <div class="flex-2 bg-white default-container flex gap-5 flex-col">
-        <div class="flex gap-5 mt-3">
+        <div class="flex gap-5 mt-3 flex-row user-details">
           <InputComponent
             class="w-full"
             label="First Name"
@@ -103,5 +104,15 @@ async function handleSave() {
   .default-container {
     min-height: 20rem;
   }
+
+  @media (max-width: 576px) {
+    .right-content {
+      flex-basis: 100%;
+    }
+    .user-details {
+      flex-wrap: wrap;
+    }
+  }
+
 }
 </style>
