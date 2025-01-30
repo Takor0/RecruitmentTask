@@ -23,6 +23,9 @@
         :handle-edit="editUser"
         v-bind="tableBind"
         :data=filteredUsers
+        :cell-processors="{
+          full_name: (row) => getName(row.first_name, row.last_name)
+        }"
       >
         <template #c__avatar="{row}">
           <img class="rounded-full w-12" :src="row.avatar" alt="avatar" />

@@ -75,6 +75,11 @@ const props = defineProps({
   data: {
     type: Array,
     default: () => []
+  },
+  cellProcessors: {
+    type: Object,
+    default: () => {
+    }
   }
 })
 
