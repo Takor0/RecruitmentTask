@@ -1,6 +1,8 @@
 <template>
   <div
-    class="relative w-full flex rounded input-file-component-wrapper">
+    class="relative w-full flex rounded input-file-component-wrapper"
+    :class="{skeleton: isLoading}"
+  >
     <label class="w-full gap-1 flex flex-row justify-center items-center w-full">
       <slot></slot>
     </label>
@@ -8,11 +10,19 @@
   </div>
 </template>
 <script setup>
+import { defineProps } from 'vue'
 
+const props = defineProps({
+  isLoading: {
+    type: Boolean,
+    default: false
+  }
+})
 
 </script>
 <style lang="scss" scoped>
 @use "@/styles/variables" as *;
+
 
 .input-file-component-wrapper {
   border: 1px solid $gray-300;

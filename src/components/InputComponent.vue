@@ -1,6 +1,6 @@
 <template>
   <div class="input-component flex flex-col">
-    <label v-if="label">
+    <label v-if="label" :class="{'skeleton': isLoading}">
       {{ label }}
     </label>
     <div
@@ -34,6 +34,10 @@ const props = defineProps({
   label: {
     type: String,
     default: ''
+  },
+  isLoading: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -47,6 +51,7 @@ const updateValue = (event) => {
 
 const computedClasses = computed(() => {
   return {
+    skeleton: props.isLoading,
     filter: props.isFilter,
     'form-input': !props.isFilter
   }

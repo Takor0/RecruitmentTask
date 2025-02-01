@@ -6,13 +6,19 @@
     <div class="flex flex-row-reverse flex-wrap gap-7">
       <div
         class="flex flex-column flex-1 bg-white flex-wrap justify-around default-container right-content">
-        <div v-if="avatar">
-          <img :src="avatar" alt="User Avatar" class="rounded-full" />
+        <div v-if="avatar" :class="{skeleton: isLoading}">
+          <img
+            :src="avatar"
+            alt="User Avatar"
+            class="rounded-full"
+            :class="{skeleton: isLoading || !avatar}"
+          />
         </div>
         <div v-else>
           <img src="@/assets/avatar.png">
         </div>
         <input-file-component
+          :is-loading="isLoading"
           class="mt-auto"
           type="file"
           @change="handleAvatarChange"
@@ -24,18 +30,22 @@
       <div class="flex-2 bg-white default-container flex gap-5 flex-col">
         <div class="flex gap-5 mt-3 flex-row user-details">
           <input-component
+            :is-loading="isLoading"
             class="w-full"
             label="First Name"
             v-model="firstName"
           />
           <input-component
+            :is-loading="isLoading"
             class="w-full"
             label="Last Name"
             v-model="lastName"
           />
         </div>
         <button-component
+          :is-loading="isLoading"
           class="mt-auto mr-auto"
+          rounded="md"
           @click="handleSave"
         >
           Update Details
@@ -62,6 +72,7 @@ const userId = isNewUser ? null : route.params.id
 const firstName = ref('')
 const lastName = ref('')
 const avatar = ref(null)
+const isLoading = ref(true)
 
 onMounted(async () => {
   if (userId) {
@@ -74,6 +85,7 @@ onMounted(async () => {
       console.error('Error fetching user:', error)
     }
   }
+  isLoading.value = false
 })
 
 
@@ -104,6 +116,10 @@ async function handleSave() {
 </script>
 <style lang="scss" scoped>
 .user-view {
+  img {
+    width: 10rem;
+    height: 10rem;
+  }
   .default-container {
     min-height: 20rem;
   }

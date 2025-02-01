@@ -1,5 +1,8 @@
 <template>
-  <button class="cursor-pointer" :class="buttonClasses">
+  <button
+    class="cursor-pointer"
+    :class="buttonClasses"
+  >
     <template v-if="icon">
       <icon-component
         :icon="icon"
@@ -39,6 +42,10 @@ const props = defineProps({
     type: String,
     default: "full",
     validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'none', 'full'].includes(value)
+  },
+  isLoading: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -50,6 +57,7 @@ const buttonClasses = computed(() => {
       transition
       duration-200
       ease-in-out
+      ${props.isLoading ? 'skeleton' : ''}
     `
   } else {
     return `
@@ -57,6 +65,7 @@ const buttonClasses = computed(() => {
       btn-${props.color}
       btn-${props.size}
       rounded-${props.rounded}
+      ${props.isLoading ? 'skeleton' : ''}
     `
   }
 })
