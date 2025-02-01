@@ -14,7 +14,7 @@
         @input="updateValue"
       />
       <div v-if="appendIcon">
-        <IconComponent class="append-icon h-3" :icon="appendIcon" />
+        <icon-component class="append-icon h-3" :icon="appendIcon" />
       </div>
     </div>
   </div>

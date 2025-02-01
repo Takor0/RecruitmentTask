@@ -12,31 +12,34 @@
         <div v-else>
           <img src="@/assets/avatar.png">
         </div>
-        <InputFileComponent
+        <input-file-component
           class="mt-auto"
           type="file"
           @change="handleAvatarChange"
         >
           <icon-component class="h-3" icon="camera" />
           Change photo
-        </InputFileComponent>
+        </input-file-component>
       </div>
       <div class="flex-2 bg-white default-container flex gap-5 flex-col">
         <div class="flex gap-5 mt-3 flex-row user-details">
-          <InputComponent
+          <input-component
             class="w-full"
             label="First Name"
             v-model="firstName"
           />
-          <InputComponent
+          <input-component
             class="w-full"
             label="Last Name"
             v-model="lastName"
           />
         </div>
-        <ButtonComponent class="mt-auto mr-auto" @click="handleSave">
+        <button-component
+          class="mt-auto mr-auto"
+          @click="handleSave"
+        >
           Update Details
-        </ButtonComponent>
+        </button-component>
       </div>
     </div>
   </div>

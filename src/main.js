@@ -14,7 +14,7 @@ app.use(router)
 
 app.mount('#app')
 
-import { useConfirm } from '@/utils/confirm.js';
+import { useConfirm } from '@/composables/useConfirm.js';
 
 window.confirm = async function (content = {
   title: 'Confirmation',

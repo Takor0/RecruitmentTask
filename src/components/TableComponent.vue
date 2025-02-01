@@ -4,8 +4,10 @@
       <thead>
       <tr>
         <th
-          class="capitalize py-4 text-left pl-3"
           v-for="column in tableColumns"
+          :class="{ 'cursor-pointer': isSortableColumn(column) }"
+          class="capitalize py-4 text-left pl-3"
+          @click="setSort(column)"
           :key="column"
         >
           {{ getHeading(column) }}
@@ -25,18 +27,18 @@
                 v-if="column === 'action' && shouldDisplayActions"
                 class="flex flex-row content-center gap-4"
               >
-                <ButtonComponent
+                <button-component
                   v-if="handleEdit"
                   @click="handleEdit(row.id)"
                   icon="edit"
                 />
-                <ButtonComponent
+                <button-component
                   v-if="handleDelete"
                   @click="deleteRow(row.id)"
                   icon="trash" />
               </div>
               <div v-else>
-                {{ row[column] }}
+                {{ getCellValue(row, column) }}
               </div>
             </slot>
           </div>
@@ -44,7 +46,7 @@
       </tr>
       </tbody>
     </table>
-    <PaginationComponent
+    <pagination-component
       :total-pages="totalPages"
       v-model="currentPage"
     />
@@ -54,8 +56,8 @@
 import PaginationComponent from '@/components/PaginationComponent.vue'
 import { defineProps, computed, ref } from 'vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import { compareValues } from '@/utils/common.js'
 
-const currentPage = ref(1)
 const props = defineProps({
   handleDelete: Function,
   handleEdit: Function,
@@ -80,14 +82,39 @@ const props = defineProps({
     type: Object,
     default: () => {
     }
+  },
+  sortExcludeColumns: {
+    type: Array,
+    default: () => []
   }
 })
 
+const sortColumns = ref({})
+const currentPage = ref(1)
+
 const totalPages = computed(() => Math.ceil(props.data.length / props.perPage))
+
+const sortedData = computed(() => {
+  if (Object.keys(sortColumns.value).length === 0) {
+    return props.data
+  }
+  return [...props.data].sort((a, b) => {
+    for (const column in sortColumns.value) {
+      const sort = sortColumns.value[column]
+      return compareValues(
+        getCellValue(a, column),
+        getCellValue(b, column),
+        sort
+      )
+    }
+    return 0
+  })
+})
+
 const tableData = computed(() => {
   const start = (currentPage.value - 1) * props.perPage
   const end = start + props.perPage
-  return props.data.slice(start, end)
+  return sortedData.value.slice(start, end)
 })
 
 const shouldDisplayActions = computed(() => {
@@ -106,6 +133,24 @@ const tableColumns = computed(() => {
 const getHeading = (column) => {
   const heading = props.headings[column]
   return heading || heading === '' ? heading : column
+}
+
+const getCellValue = (row, column) => {
+  const processor = props.cellProcessors?.[column]
+  const value = processor ? processor(row) : row[column]
+  return value || ''
+}
+
+const isSortableColumn = (column) => {
+  return !props.sortExcludeColumns.includes(column) && column !== 'action'
+}
+
+const setSort = (column) => {
+  if (!isSortableColumn(column)) {
+    return
+  }
+  const currentSort = sortColumns.value?.[column]
+  sortColumns.value[column] = currentSort === 'asc' ? 'desc' : 'asc'
 }
 
 const deleteRow = async (id) => {

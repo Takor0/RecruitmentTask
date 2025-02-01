@@ -20,11 +20,7 @@ export function useSearchParams() {
       query[key] = value
     }
 
-    router.replace({ query }).catch(err => {
-      if (err.name !== 'NavigationDuplicated') {
-        throw err
-      }
-    })
+    router.replace({ query })
   }
 
   return {

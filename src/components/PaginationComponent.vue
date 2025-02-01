@@ -5,7 +5,7 @@
       @click="changePage(modelValue - 1)"
       :disabled="currentPage === 1"
     >
-      <IconComponent class="h-3" icon="double-arrow-left" />
+      <icon-component class="h-3" icon="double-arrow-left" />
     </button>
     <button
       class="pagination-page"
@@ -21,7 +21,7 @@
       @click="changePage(modelValue + 1)"
       :disabled="modelValue === totalPages"
     >
-      <IconComponent class="h-3" icon="double-arrow-right" />
+      <icon-component class="h-3" icon="double-arrow-right" />
     </button>
   </div>
 </template>

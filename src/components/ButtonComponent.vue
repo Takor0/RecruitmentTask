@@ -1,7 +1,11 @@
 <template>
   <button class="cursor-pointer" :class="buttonClasses">
     <template v-if="icon">
-      <IconComponent :icon="icon" class="w-4 h-4" />
+      <icon-component
+        :icon="icon"
+        class="w-4 h-4"
+        :class="iconClasses"
+      />
     </template>
     <template v-else>
       <slot />
@@ -17,7 +21,7 @@ const props = defineProps({
   color: {
     type: String,
     default: 'primary',
-    validator: (value) => ['primary'].includes(value)
+    validator: (value) => ['primary', 'gray'].includes(value)
   },
   icon: {
     type: String
@@ -26,6 +30,15 @@ const props = defineProps({
     type: String,
     default: 'md',
     validator: (value) => ['sm', 'md', 'lg'].includes(value)
+  },
+  iconClasses: {
+    type: String,
+    default: ''
+  },
+  rounded: {
+    type: String,
+    default: "full",
+    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'none', 'full'].includes(value)
   }
 })
 
@@ -38,11 +51,12 @@ const buttonClasses = computed(() => {
       duration-200
       ease-in-out
     `
-  } else if (props.color === 'primary') {
+  } else {
     return `
       btn
       btn-${props.color}
       btn-${props.size}
+      rounded-${props.rounded}
     `
   }
 })
@@ -54,6 +68,14 @@ const buttonClasses = computed(() => {
 .btn-md {
   padding: 0.25rem 0.75rem;
   height: 2.5rem;
+}
+.btn-gray {
+  background-color: $gray-200;
+  color: black !important;
+}
+
+.btn-gray:hover {
+  background-color: color.adjust($gray-300, $lightness: -10%);
 }
 
 .btn-primary {
@@ -72,7 +94,6 @@ const buttonClasses = computed(() => {
   flex-direction: row;
   color: white;
   gap: 1rem;
-  border-radius: 1.2rem;
   transition: background-color 0.2s;
 }
 </style>

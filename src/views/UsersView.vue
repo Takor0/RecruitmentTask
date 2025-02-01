@@ -5,7 +5,7 @@
     </h1>
     <div class="bg-white default-container">
       <div class="flex flex-row justify-between items-center gap-3">
-        <InputComponent
+        <input-component
           is-filter
           class="search-input"
           v-model="searchUser"
@@ -13,12 +13,13 @@
           placeholder="Search for users..."
           append-icon="search"
         />
-        <ButtonComponent @click="router.push({name: 'user', params: {id:'new'}})">
-          <IconComponent class="h-3" icon="plus" />
+        <button-component @click="router.push({name: 'user', params: {id:'new'}})">
+          <icon-component class="h-3" icon="plus" />
           Add User
-        </ButtonComponent>
+        </button-component>
       </div>
-      <TableComponent
+      <table-component
+        :sort-exclude-columns="['avatar']"
         :handle-delete="deleteUser"
         :handle-edit="editUser"
         v-bind="tableBind"
@@ -30,10 +31,7 @@
         <template #c__avatar="{row}">
           <img class="rounded-full w-12" :src="row.avatar" alt="avatar" />
         </template>
-        <template #c__full_name="{row}">
-          {{ getName(row.first_name, row.last_name) }}
-        </template>
-      </TableComponent>
+      </table-component>
     </div>
   </div>
 </template>
