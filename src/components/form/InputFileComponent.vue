@@ -3,7 +3,7 @@
     class="relative w-full flex rounded input-file-component-wrapper"
     :class="{skeleton: isLoading}"
   >
-    <label class="w-full gap-1 flex flex-row justify-center items-center w-full">
+    <label class="w-full gap-1 flex flex-row justify-center items-center w-full p2">
       <slot></slot>
     </label>
     <input class="absolute w-full left-0 h-full" v-bind="$attrs" type="file" />
@@ -23,6 +23,10 @@ const props = defineProps({
 <style lang="scss" scoped>
 @use "@/styles/colors" as colors;
 
+
+.input-file-component-wrapper:hover {
+  background-color: colors.$gray-100
+}
 
 .input-file-component-wrapper {
   border: 1px solid colors.$gray-300;

@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div class="container">
+    <div class="app-container">
       <confirm-alert />
       <confirm-modal />
       <router-view />
@@ -18,15 +18,28 @@ import ConfirmModal from '@/modals/ConfirmModal.vue'
 
 .app {
   width: 100%;
-  padding: 20px;
   display: flex;
+  padding-top: 33px;
+  padding-bottom: 75px;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   background-color: colors.$gray-100;
 }
 
-.container {
+.app-container {
   width: 100%;
+  max-width: 1150px;
+}
+
+@media (max-width: 1165px) {
+  .app-container {
+    max-width: 950px;
+  }
+}
+@media (max-width: 950px) {
+  .app-container {
+    max-width: 750px;
+  }
 }
 </style>

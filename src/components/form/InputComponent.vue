@@ -1,6 +1,10 @@
 <template>
   <div class="input-component flex flex-col">
-    <label v-if="label" :class="{'skeleton': isLoading}">
+    <label
+      v-if="label"
+      :class="{'skeleton': isLoading}"
+      class="p2"
+    >
       {{ label }}
     </label>
     <div
@@ -60,12 +64,18 @@ const computedClasses = computed(() => {
 </script>
 <style lang="scss">
 @use "@/styles/colors" as colors;
+@use "@/styles/typography";
 
 .input-component {
-  gap: 1rem;
+  gap: 0.5rem;
 
   input:active, input:focus {
     outline: none;
+  }
+
+
+  .input-wrapper:has(input:hover) {
+    outline: 1px solid colors.$gray-200;
   }
 
 
@@ -74,12 +84,13 @@ const computedClasses = computed(() => {
   }
 
   .form-input {
+    @extend .p2;
     border: 1px solid colors.$gray-200;
   }
 
   .filter {
     background-color: colors.$gray-100;
-    font-weight: 400;
+    font-weight: 500;
 
     .append-icon {
       color: colors.$gray-500;

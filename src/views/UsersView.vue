@@ -1,9 +1,9 @@
 <template>
   <div class="users-view relative">
-    <h1 class="mb-5 view-title">
+    <h1 class="view-title">
       User list
     </h1>
-    <div class="bg-white default-container">
+    <div class="bg-white default-container mt-7">
       <div class="flex flex-row justify-between items-center gap-3">
         <input-component
           is-filter
@@ -19,6 +19,7 @@
         </button-component>
       </div>
       <table-component
+        class="mt-5"
         :sort-exclude-columns="['avatar']"
         :handle-delete="deleteUser"
         :handle-edit="editUser"
@@ -133,7 +134,7 @@ onMounted(() => {
 
   .search-input {
     width: 100%;
-    max-width: 30rem;
+    max-width: 27.5rem;
   }
 
   .pagination-wrapper {

@@ -1,52 +1,89 @@
-// tests/unit/PaginationComponent.spec.js
-import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import PaginationComponent from '@/components/table/PaginationComponent.vue'
-import IconComponent from '@/components/common/IconComponent.vue'
+import { nextTick } from 'vue'
+import { describe, it, expect, vi } from 'vitest'
+import TableComponent from '@/components/table/TableComponent.vue'
 
-describe('PaginationComponent', () => {
-  const totalPages = 5
+vi.mock('@/utils/common.js', () => ({
+  compareValues: (a, b, order = 'asc') => {
+    if (a === b) return 0
+    if (order === 'asc') return a > b ? 1 : -1
+    return a < b ? 1 : -1
+  }
+}))
 
-  it('renders the correct number of page buttons', () => {
-    const wrapper = mount(PaginationComponent, {
-      props: { modelValue: 1, totalPages },
+const ButtonComponentStub = {
+  name: 'ButtonComponent',
+  template: '<button @click="$emit(\'click\')"><slot /></button>',
+  props: ['icon']
+}
+
+const PaginationComponentStub = {
+  name: 'PaginationComponent',
+  template: '<div class="pagination-stub"></div>',
+  props: ['totalPages', 'modelValue']
+}
+
+const globalStubs = {
+  ButtonComponent: ButtonComponentStub,
+  PaginationComponent: PaginationComponentStub
+}
+
+describe('TableComponent.vue', () => {
+  const columns = ['name', 'age']
+  const headings = { name: 'Full Name', age: 'Age' }
+  const data = [
+    { id: 1, name: 'Alice', age: 30 },
+    { id: 2, name: 'Bob', age: 25 },
+    { id: 3, name: 'Charlie', age: 35 }
+  ]
+
+  it('renders table rows with correct cell values and applies cellProcessors', () => {
+    const cellProcessors = {
+      age: (row) => `${row.age} years old`
+    }
+
+    const wrapper = mount(TableComponent, {
+      props: {
+        columns,
+        headings,
+        data,
+        perPage: 2,
+        cellProcessors
+      },
+      global: { stubs: globalStubs }
     })
-    const pageButtons = wrapper.findAll('.pagination-page')
-    expect(pageButtons.length).toBe(totalPages)
+
+    const rows = wrapper.findAll('tbody tr')
+    expect(rows).toHaveLength(2)
+    const firstRowCells = rows[0].findAll('td')
+    expect(firstRowCells[0].text()).toContain('Alice')
+    expect(firstRowCells[1].text()).toContain('30 years old')
   })
 
-  it('disables the left button when on the first page', () => {
-    const wrapper = mount(PaginationComponent, {
-      props: { modelValue: 1, totalPages },
-    })
-    const leftBtn = wrapper.find('button:first-of-type')
-    expect(leftBtn.attributes('disabled')).toBeDefined()
-  })
 
-  it('disables the right button when on the last page', () => {
-    const wrapper = mount(PaginationComponent, {
-      props: { modelValue: totalPages, totalPages },
+  it('sorts the data when a sortable column header is clicked', async () => {
+    const wrapper = mount(TableComponent, {
+      props: {
+        columns,
+        headings,
+        data
+      },
+      global: { stubs: globalStubs }
     })
-    const rightBtn = wrapper.find('button:last-of-type')
-    expect(rightBtn.attributes('disabled')).toBeDefined()
-  })
 
-  it('emits update:modelValue when a page is clicked', async () => {
-    const wrapper = mount(PaginationComponent, {
-      props: { modelValue: 2, totalPages },
-    })
-    const pageButtons = wrapper.findAll('.pagination-page')
-    await pageButtons[3].trigger('click') // click page number 4
-    expect(wrapper.emitted('update:modelValue')[0]).toEqual([4])
-  })
+    let firstRow = wrapper.find('tbody tr')
+    expect(firstRow.text()).toContain('Alice')
 
-  it('emits update:modelValue when navigation arrows are clicked', async () => {
-    // Test going to next page from page 2.
-    const wrapper = mount(PaginationComponent, {
-      props: { modelValue: 2, totalPages },
-    })
-    const rightBtn = wrapper.find('button:last-of-type')
-    await rightBtn.trigger('click')
-    expect(wrapper.emitted('update:modelValue')[0]).toEqual([3])
+    const ageHeader = wrapper.findAll('thead th').filter(th => th.text() === 'Age')[0]
+    await ageHeader.trigger('click')
+    await nextTick()
+
+    firstRow = wrapper.find('tbody tr')
+    expect(firstRow.text()).toContain('Bob')
+
+    await ageHeader.trigger('click')
+    await nextTick()
+    firstRow = wrapper.find('tbody tr')
+    expect(firstRow.text()).toContain('Charlie')
   })
 })

@@ -167,8 +167,13 @@ const deleteRow = async (id) => {
 @use "@/styles/colors" as colors;
 
 table {
-  thead tr {
+  thead tr:first-child {
     color: colors.$gray-500;
+    border-top: colors.$gray-100 1px solid;
+
+    th {
+      padding-top: 15px;
+    }
   }
 
   tbody {

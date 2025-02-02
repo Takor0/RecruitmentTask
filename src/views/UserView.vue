@@ -1,9 +1,9 @@
 <template>
   <div class="user-view">
-    <h1 class="mb-4 view-title">
+    <h1 class="view-title">
       Add user
     </h1>
-    <div class="flex flex-row-reverse flex-wrap gap-7">
+    <div class="mt-7 flex flex-row-reverse flex-wrap gap-7">
       <div
         class="flex flex-column flex-1 bg-white flex-wrap justify-around default-container right-content">
         <div v-if="avatar" :class="{skeleton: isLoading}">
@@ -28,7 +28,7 @@
         </input-file-component>
       </div>
       <div class="flex-2 bg-white default-container flex gap-5 flex-col">
-        <div class="flex gap-5 mt-3 flex-row user-details">
+        <div class="flex gap-5 mt-10 flex-row user-details">
           <template v-for="(values, key) in userDetails" :key="key">
             <input-component
               :is-loading="isLoading"
@@ -89,7 +89,7 @@ onMounted(async () => {
       avatar.value = responseData.data?.avatar || null
 
     } catch (error) {
-      return alert({message: "Error fetching user"})
+      return alert({ message: 'Error fetching user' })
     }
   }
   isLoading.value = false
@@ -116,12 +116,14 @@ async function handleSave() {
     }
     router.push({ name: 'users' }) // Navigate back to list view
   } catch (error) {
-    return alert({message: "Error saving user"})
+    return alert({ message: 'Error saving user' })
   }
 }
 </script>
 <style lang="scss" scoped>
 .user-view {
+  margin-top: 2rem;
+
   img {
     width: 10rem;
     height: 10rem;

@@ -40,8 +40,8 @@ const props = defineProps({
   },
   rounded: {
     type: String,
-    default: "full",
-    validator: (value) => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'none', 'full'].includes(value)
+    default: 'full',
+    validator: (value) => ['md', 'lg', '2xl', 'full'].includes(value)
   },
   isLoading: {
     type: Boolean,
@@ -75,9 +75,10 @@ const buttonClasses = computed(() => {
 @use "@/styles/colors" as colors;
 
 .btn-md {
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 1.25rem;
   height: 2.5rem;
 }
+
 .btn-gray {
   background-color: colors.$gray-200;
   color: black !important;
@@ -104,5 +105,6 @@ const buttonClasses = computed(() => {
   color: white;
   gap: 1rem;
   transition: background-color 0.2s;
+  font-weight: 400;
 }
 </style>
