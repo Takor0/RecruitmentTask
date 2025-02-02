@@ -28,7 +28,7 @@
 
 <script setup>
 import { defineProps, defineEmits, computed } from 'vue'
-import IconComponent from '@/components/IconComponent.vue'
+import IconComponent from '@/components/common/IconComponent.vue'
 
 const props = defineProps({
   modelValue: {

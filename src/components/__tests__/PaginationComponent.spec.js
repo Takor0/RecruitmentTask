@@ -1,8 +1,8 @@
 // tests/unit/PaginationComponent.spec.js
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import PaginationComponent from '@/components/PaginationComponent.vue'
-import IconComponent from '@/components/IconComponent.vue'
+import PaginationComponent from '@/components/table/PaginationComponent.vue'
+import IconComponent from '@/components/common/IconComponent.vue'
 
 describe('PaginationComponent', () => {
   const totalPages = 5

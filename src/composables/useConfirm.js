@@ -1,5 +1,5 @@
 import { createApp, h } from 'vue';
-import ConfirmComponent from '@/components/ConfirmComponent.vue';
+import ConfirmComponent from '@/components/form/ConfirmComponent.vue';
 
 export function useConfirm({ title = 'Confirm', message = 'Are you sure?', confirmText = 'Yes', cancelText = 'No' }) {
   return new Promise((resolve, reject) => {

@@ -6,18 +6,18 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../containers/TheContainer.vue'),
+      component: () => import('@/containers/TheContainer.vue'),
       children: [
         {
           alias: '',
           path: 'users',
           name: 'users',
-          component: () => import('../views/UsersView.vue')
+          component: () => import('@/views/UsersView.vue')
         },
         {
           path: 'users/:id',
           name: 'user',
-          component: () => import('../views/UserView.vue')
+          component: () => import('@/views/UserView.vue')
         }
       ]
     }

@@ -53,9 +53,9 @@
   </div>
 </template>
 <script setup>
-import PaginationComponent from '@/components/PaginationComponent.vue'
+import PaginationComponent from '@/components/table/PaginationComponent.vue'
 import { defineProps, computed, ref } from 'vue'
-import ButtonComponent from '@/components/ButtonComponent.vue'
+import ButtonComponent from '@/components/common/ButtonComponent.vue'
 import { compareValues } from '@/utils/common.js'
 
 const props = defineProps({

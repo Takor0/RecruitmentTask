@@ -30,7 +30,7 @@ const props = defineProps({
   height: 2rem;
 
   label {
-    color: $gray-500;
+    color: colors.$gray-500;
   }
 
   input {

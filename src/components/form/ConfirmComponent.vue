@@ -30,7 +30,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import ButtonComponent from '@/components/ButtonComponent.vue'
+import ButtonComponent from '@/components/common/ButtonComponent.vue'
 
 const props = defineProps({
   title: {

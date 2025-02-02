@@ -55,10 +55,10 @@
 import { ref, onMounted, reactive, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import UsersService from '@/services/users'
-import ButtonComponent from '@/components/ButtonComponent.vue'
-import InputComponent from '@/components/InputComponent.vue'
-import InputFileComponent from '@/components/InputFileComponent.vue'
-import IconComponent from '@/components/IconComponent.vue'
+import ButtonComponent from '@/components/common/ButtonComponent.vue'
+import InputComponent from '@/components/form/InputComponent.vue'
+import InputFileComponent from '@/components/form/InputFileComponent.vue'
+import IconComponent from '@/components/common/IconComponent.vue'
 
 const route = useRoute()
 const router = useRouter()

@@ -38,11 +38,11 @@
 <script setup>
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import TableComponent from '@/components/TableComponent.vue'
-import IconComponent from '@/components/IconComponent.vue'
+import TableComponent from '@/components/table/TableComponent.vue'
+import IconComponent from '@/components/common/IconComponent.vue'
 import UsersService from '@/services/users'
-import ButtonComponent from '@/components/ButtonComponent.vue'
-import InputComponent from '@/components/InputComponent.vue'
+import ButtonComponent from '@/components/common/ButtonComponent.vue'
+import InputComponent from '@/components/form/InputComponent.vue'
 import { useSearchParams } from '@/composables/useSearchParams'
 
 const route = useRoute()
