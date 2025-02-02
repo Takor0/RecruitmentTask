@@ -13,7 +13,7 @@ class UsersService {
       url: USERS_ENDPOINTS.users,
       query: {
         page: 1,
-        per_page: 999999999
+        per_page: 1000
       }
     })
   }
