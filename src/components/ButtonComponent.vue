@@ -72,27 +72,27 @@ const buttonClasses = computed(() => {
 </script>
 <style scoped lang="scss">
 @use "sass:color";
-@use "@/styles/variables" as *;
+@use "@/styles/colors" as colors;
 
 .btn-md {
   padding: 0.25rem 0.75rem;
   height: 2.5rem;
 }
 .btn-gray {
-  background-color: $gray-200;
+  background-color: colors.$gray-200;
   color: black !important;
 }
 
 .btn-gray:hover {
-  background-color: color.adjust($gray-300, $lightness: -10%);
+  background-color: color.adjust(colors.$gray-300, $lightness: -10%);
 }
 
 .btn-primary {
-  background-color: $primary;
+  background-color: colors.$primary;
 }
 
 .btn-primary:hover {
-  background-color: color.adjust($primary, $lightness: -10%);
+  background-color: color.adjust(colors.$primary, $lightness: -10%);
 }
 
 .btn {

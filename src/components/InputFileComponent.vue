@@ -21,11 +21,11 @@ const props = defineProps({
 
 </script>
 <style lang="scss" scoped>
-@use "@/styles/variables" as *;
+@use "@/styles/colors" as colors;
 
 
 .input-file-component-wrapper {
-  border: 1px solid $gray-300;
+  border: 1px solid colors.$gray-300;
   cursor: pointer;
   height: 2rem;
 

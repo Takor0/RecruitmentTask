@@ -164,16 +164,16 @@ const deleteRow = async (id) => {
 
 </script>
 <style scoped lang="scss">
-@use "@/styles/variables" as *;
+@use "@/styles/colors" as colors;
 
 table {
   thead tr {
-    color: $gray-500;
+    color: colors.$gray-500;
   }
 
   tbody {
     tr:nth-child(odd) {
-      background-color: $gray-100;
+      background-color: colors.$gray-100;
     }
   }
 }

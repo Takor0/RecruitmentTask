@@ -53,7 +53,7 @@ const changePage = (page) => {
 </script>
 <style lang="scss">
 @use "sass:color";
-@use "@/styles/variables" as *;
+@use "@/styles/colors" as colors;
 
 .pagination-wrapper {
   button:first-child {
@@ -71,8 +71,8 @@ const changePage = (page) => {
     background-color: white;
     border-collapse: collapse;
     min-width: 30px;
-    color: $primary;
-    border: 1px solid $gray-200;
+    color: colors.$primary;
+    border: 1px solid colors.$gray-200;
     margin-left: -1px;
     cursor: pointer;
     transition: background-color 0.2s, border-color 0.2s;
@@ -80,18 +80,18 @@ const changePage = (page) => {
 
   button:disabled {
     cursor: not-allowed;
-    color: $gray-500;
+    color: colors.$gray-500;
   }
 
   button.active {
-    background-color: $primary;
-    border-color: $primary;
+    background-color: colors.$primary;
+    border-color: colors.$primary;
     color: white;
   }
 
   button:hover {
-    background-color: color.adjust($primary, $lightness: 40%);
-    border-color: color.adjust($primary, $lightness: 40%);
+    background-color: color.adjust(colors.$primary, $lightness: 40%);
+    border-color: color.adjust(colors.$primary, $lightness: 40%);
   }
 }
 </style>

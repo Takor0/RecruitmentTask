@@ -59,7 +59,7 @@ const computedClasses = computed(() => {
 
 </script>
 <style lang="scss">
-@use "@/styles/variables" as *;
+@use "@/styles/colors" as colors;
 
 .input-component {
   gap: 1rem;
@@ -70,19 +70,19 @@ const computedClasses = computed(() => {
 
 
   .input-wrapper:has(input:focus) {
-    outline: 1px solid $gray-300;
+    outline: 1px solid colors.$gray-300;
   }
 
   .form-input {
-    border: 1px solid $gray-200;
+    border: 1px solid colors.$gray-200;
   }
 
   .filter {
-    background-color: $gray-100;
+    background-color: colors.$gray-100;
     font-weight: 400;
 
     .append-icon {
-      color: $gray-500;
+      color: colors.$gray-500;
     }
   }
 }

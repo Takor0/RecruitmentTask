@@ -67,7 +67,7 @@ const handleCancel = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "@/styles/variables" as *;
+@use "@/styles/colors" as colors;
 
 @keyframes fade-in {
   from {
@@ -84,6 +84,6 @@ const handleCancel = () => {
   animation: fade-in 0.2s ease-out;
 }
 .message {
-  color: $gray-500;
+  color: colors.$gray-500;
 }
 </style>

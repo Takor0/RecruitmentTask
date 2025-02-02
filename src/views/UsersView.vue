@@ -109,8 +109,6 @@ onMounted(() => {
 })
 </script>
 <style lang="scss">
-@use "@/styles/variables" as *;
-
 .users-view {
   .table-wrapper tr {
     td:nth-child(2) {

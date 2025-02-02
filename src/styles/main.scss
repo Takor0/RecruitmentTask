@@ -1,9 +1,9 @@
-@use "variables" as *;
+@use "colors" as colors;
 @use "typography";
 
 :root {
   font-size: 13px;
-  background-color: $gray-100;
+  background-color: colors.$gray-100;
 }
 
 .default-container {
@@ -11,7 +11,7 @@
 }
 
 .view-title {
-  color: $gray-500;
+  color: colors.$gray-500;
 }
 
 @keyframes shimmer {
