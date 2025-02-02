@@ -53,13 +53,13 @@ const users = ref([])
 
 const { setSearchParam } = useSearchParams()
 
-const tableBind = reactive({
+const tableBind = {
   columns: ['avatar', 'full_name'],
   headings: {
     avatar: '',
     full_name: 'Full Name'
   }
-})
+}
 
 
 watch(searchUser, (newValue) => {
@@ -82,8 +82,8 @@ const getName = (firstName = '', lastName = '') => {
   return `${firstName} ${lastName}`
 }
 
-const editUser = (index) => {
-  router.push({ name: 'user', params: { id: index } })
+const editUser = (id) => {
+  router.push({ name: 'user', params: { id: id } })
 }
 
 const fetchUsers = async () => {
