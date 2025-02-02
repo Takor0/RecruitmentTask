@@ -15,7 +15,7 @@
           />
         </div>
         <div v-else>
-          <img src="@/assets/avatar.png">
+          <img alt="missing avatar" src="@/assets/avatar.png">
         </div>
         <input-file-component
           :is-loading="isLoading"
@@ -89,7 +89,7 @@ onMounted(async () => {
       avatar.value = responseData.data?.avatar || null
 
     } catch (error) {
-      console.error('Error fetching user:', error)
+      return alert({message: "Error fetching user"})
     }
   }
   isLoading.value = false
@@ -116,7 +116,7 @@ async function handleSave() {
     }
     router.push({ name: 'users' }) // Navigate back to list view
   } catch (error) {
-    console.error('Error saving user:', error)
+    return alert({message: "Error saving user"})
   }
 }
 </script>

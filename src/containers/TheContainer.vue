@@ -1,27 +1,16 @@
 <template>
   <div class="app">
     <div class="container">
-      <ConfirmComponent
-        v-if="confirmStore.isOpen"
-        :title="confirmStore.title"
-        :message="confirmStore.message"
-        :confirmText="confirmStore.confirmText"
-        :cancelText="confirmStore.cancelText"
-        :isOpen="confirmStore.isOpen"
-        @confirm="confirmStore.confirm"
-        @cancel="confirmStore.cancel"
-      />
+      <confirm-alert />
+      <confirm-modal />
       <router-view />
     </div>
   </div>
 </template>
 
 <script setup>
-
-import { useConfirmStore } from '@/stores/confirm'
-import ConfirmComponent from '@/components/form/ConfirmComponent.vue'
-
-const confirmStore = useConfirmStore()
+import ConfirmAlert from '@/modals/AlertModal.vue'
+import ConfirmModal from '@/modals/ConfirmModal.vue'
 </script>
 
 <style lang="scss">

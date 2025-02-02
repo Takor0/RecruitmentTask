@@ -47,7 +47,6 @@ export const request = async ({
 
     return { responseData, response }
   } catch (error) {
-    console.error('Request error:', error)
     throw error
   }
 }

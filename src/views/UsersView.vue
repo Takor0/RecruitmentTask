@@ -29,7 +29,18 @@
         }"
       >
         <template #c__avatar="{row}">
-          <img class="rounded-full w-12" :src="row.avatar" alt="avatar" />
+          <img
+            v-if="row.avatar"
+            class="rounded-full w-12"
+            :src="row.avatar"
+            alt="avatar"
+          />
+          <img
+            v-else
+            class="rounded-full w-12"
+            src="@/assets/avatar-table.png"
+            alt="missing avatar"
+          />
         </template>
       </table-component>
     </div>
@@ -91,7 +102,7 @@ const fetchUsers = async () => {
     const { responseData } = await UsersService.listUsers()
     users.value = responseData.data || []
   } catch (error) {
-    console.error('Error fetching users:', error)
+    return alert({message: "Error fetching users"})
   }
 }
 
@@ -100,7 +111,7 @@ const deleteUser = async (id) => {
     await UsersService.deleteUser(id)
     await fetchUsers()
   } catch (error) {
-    console.error('Error deleting user:', error)
+    return alert({message: "Error deleting user"})
   }
 }
 
