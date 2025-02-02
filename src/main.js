@@ -14,23 +14,18 @@ app.use(router)
 
 app.mount('#app')
 
-import { useConfirm } from '@/composables/useConfirm.js';
+import { useConfirm } from '@/composables/useConfirm.js'
 
-window.confirm = async function (content = {
-  title: 'Confirmation',
-  message: 'Are you sure?',
-  confirmText: 'Yes',
-  cancelText: 'No',
-}) {
+window.confirm = async (content) => {
   try {
     await useConfirm({
-      title: content.title,
-      message: content.message,
-      confirmText: content.confirmText,
-      cancelText: content.cancelText,
-    });
-    return true;
+      title: content.title || 'Confirm',
+      message: content.message || 'Are you sure?',
+      confirmText: content.confirmText || 'Yes',
+      cancelText: content.cancelText || 'No'
+    })
+    return true
   } catch {
-    return false;
+    return false
   }
-};
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="users-view relative">
-    <h1 class="mb-4 view-title">
+    <h1 class="mb-5 view-title">
       User list
     </h1>
     <div class="bg-white default-container">
