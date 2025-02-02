@@ -29,18 +29,14 @@
       </div>
       <div class="flex-2 bg-white default-container flex gap-5 flex-col">
         <div class="flex gap-5 mt-3 flex-row user-details">
-          <input-component
-            :is-loading="isLoading"
-            class="w-full"
-            label="First Name"
-            v-model="firstName"
-          />
-          <input-component
-            :is-loading="isLoading"
-            class="w-full"
-            label="Last Name"
-            v-model="lastName"
-          />
+          <template v-for="(values, key) in userDetails" :key="key">
+            <input-component
+              :is-loading="isLoading"
+              class="w-full"
+              :label="values.label"
+              v-model="values.value"
+            />
+          </template>
         </div>
         <button-component
           :is-loading="isLoading"
@@ -56,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import UsersService from '@/services/users'
 import ButtonComponent from '@/components/ButtonComponent.vue'
@@ -69,25 +65,35 @@ const router = useRouter()
 
 const isNewUser = route.params.id === 'new'
 const userId = isNewUser ? null : route.params.id
-const firstName = ref('')
-const lastName = ref('')
-const avatar = ref(null)
 const isLoading = ref(true)
+const avatar = ref(null)
+
+
+const userDetails = reactive({
+  firstName: {
+    label: 'First Name',
+    value: ''
+  },
+  lastName: {
+    label: 'Last Name',
+    value: ''
+  }
+})
 
 onMounted(async () => {
   if (userId) {
     try {
       const { responseData } = await UsersService.getUser(userId)
-      firstName.value = responseData.data?.first_name || ''
-      lastName.value = responseData.data?.last_name || ''
+      userDetails.firstName.value = responseData.data?.first_name || ''
+      userDetails.lastName.value = responseData.data?.last_name || ''
       avatar.value = responseData.data?.avatar || null
+
     } catch (error) {
       console.error('Error fetching user:', error)
     }
   }
   isLoading.value = false
 })
-
 
 function handleAvatarChange(event) {
   const file = event.target.files[0]
@@ -98,8 +104,8 @@ function handleAvatarChange(event) {
 
 async function handleSave() {
   const userData = {
-    first_name: firstName.value,
-    last_name: lastName.value
+    first_name: userDetails.firstName,
+    last_name: userDetails.lastName
   }
 
   try {
@@ -120,6 +126,7 @@ async function handleSave() {
     width: 10rem;
     height: 10rem;
   }
+
   .default-container {
     min-height: 20rem;
   }
