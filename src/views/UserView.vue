@@ -1,17 +1,18 @@
 <template>
-  <div class="user-view">
-    <h1 class="view-title">
+  <div class="user-view" data-cy="user-view">
+    <h1 class="view-title" data-cy="user-view-title">
       Add user
     </h1>
     <div class="mt-7 flex flex-row-reverse flex-wrap gap-7">
       <div
         class="flex flex-column flex-1 bg-white flex-wrap justify-around default-container right-content">
-        <div v-if="avatar" :class="{skeleton: isLoading}">
+        <div v-if="avatar" :class="{skeleton: isLoading}" data-cy="user-avatar-container">
           <img
             :src="avatar"
             alt="User Avatar"
             class="rounded-full"
             :class="{skeleton: isLoading || !avatar}"
+            data-cy="user-avatar"
           />
         </div>
         <div v-else>
@@ -21,13 +22,15 @@
           :is-loading="isLoading"
           class="mt-auto"
           type="file"
+          data-cy="avatar-input"
           @change="handleAvatarChange"
         >
           <icon-component class="h-3" icon="camera" />
           Change photo
         </input-file-component>
       </div>
-      <div class="flex-2 bg-white default-container flex gap-5 flex-col">
+      <form class="flex-2 bg-white default-container flex gap-5 flex-col"
+            @submit.prevent="handleSave">
         <div class="flex gap-5 mt-10 flex-row user-details">
           <template v-for="(values, key) in userDetails" :key="key">
             <input-component
@@ -35,21 +38,25 @@
               class="w-full"
               :label="values.label"
               v-model="values.value"
+              :data-cy="`user-detail-${key}`"
+              required
             />
           </template>
         </div>
         <button-component
+          type="submit"
           :is-loading="isLoading"
           class="mt-auto mr-auto"
           rounded="md"
-          @click="handleSave"
+          data-cy="update-details-btn"
         >
           Update Details
         </button-component>
-      </div>
+      </form>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue'
@@ -114,7 +121,7 @@ async function handleSave() {
     } else {
       await UsersService.createUser(userData)
     }
-    router.push({ name: 'users' }) // Navigate back to list view
+    router.push({ name: 'users' })
   } catch (error) {
     return alert({ message: 'Error saving user' })
   }

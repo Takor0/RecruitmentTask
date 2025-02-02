@@ -17,10 +17,19 @@
         {{ message }}
       </p>
       <div class="mt-6 flex justify-end gap-2">
-        <button-component @click="handleCancel" rounded="lg" color="gray">
+        <button-component
+          @click="handleCancel"
+          rounded="lg"
+          color="gray"
+          data-cy="cancel-button"
+        >
           {{ cancelText }}
         </button-component>
-        <button-component @click="handleConfirm" rounded="lg">
+        <button-component
+          @click="handleConfirm"
+          rounded="lg"
+          data-cy="confirm-button"
+        >
           {{ confirmText }}
         </button-component>
       </div>

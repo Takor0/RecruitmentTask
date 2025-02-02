@@ -28,11 +28,13 @@
                 class="flex flex-row content-center gap-4"
               >
                 <button-component
+                  data-cy="edit-button"
                   v-if="handleEdit"
                   @click="handleEdit(row.id)"
                   icon="edit"
                 />
                 <button-component
+                  data-cy="delete-button"
                   v-if="handleDelete"
                   @click="deleteRow(row.id)"
                   icon="trash" />

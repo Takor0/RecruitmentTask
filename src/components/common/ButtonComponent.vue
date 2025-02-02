@@ -74,6 +74,14 @@ const buttonClasses = computed(() => {
 @use "sass:color";
 @use "@/styles/colors" as colors;
 
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
 .btn-md {
   padding: 0.25rem 1.25rem;
   height: 2.5rem;
